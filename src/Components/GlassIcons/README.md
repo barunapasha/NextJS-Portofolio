@@ -7,7 +7,7 @@ Komponen GlassIcons adalah komponen React yang menampilkan icon dengan efek glas
 - ✅ **Icon Size**: Ukuran icon diperbesar dari `w-6 h-6` menjadi `w-8 h-8`
 - ✅ **Grid Layout**: Grid disesuaikan untuk distribusi yang lebih rata (3-6 kolom)
 - ✅ **Container Size**: Container icon diperbesar untuk mengakomodasi icon yang lebih besar
-- ✅ **Removed Icons**: Docker dan Netlify dihapus dari daftar icon
+- ✅ **Updated Icons**: GraphQL diganti dengan Vue.js, AWS diganti dengan Supabase
 - ✅ **Better Spacing**: Gap antar icon disesuaikan untuk tampilan yang lebih rapi
 
 ## Cara Penggunaan
@@ -92,8 +92,8 @@ import {
   SiGithub,
   SiFigma,
   SiAdobexd,
-  SiGraphql,
-  SiAmazon,
+  SiVuedotjs,
+  SiSupabase,
   SiVercel
 } from 'react-icons/si';
 import { 
@@ -123,8 +123,8 @@ const skillsIcons = [
   { icon: <SiAdobexd className="w-8 h-8" />, color: 'pink', label: 'Adobe XD' },
   { icon: <MdDevices className="w-8 h-8" />, color: 'green', label: 'Responsive Design' },
   { icon: <MdApi className="w-8 h-8" />, color: 'blue', label: 'RESTful APIs' },
-  { icon: <SiGraphql className="w-8 h-8" />, color: 'pink', label: 'GraphQL' },
-  { icon: <SiAmazon className="w-8 h-8" />, color: 'orange', label: 'AWS' },
+  { icon: <SiVuedotjs className="w-8 h-8" />, color: 'green', label: 'Vue.js' },
+  { icon: <SiSupabase className="w-8 h-8" />, color: 'green', label: 'Supabase' },
   { icon: <SiVercel className="w-8 h-8" />, color: 'black', label: 'Vercel' },
 ];
 

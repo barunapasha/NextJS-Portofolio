@@ -33,13 +33,13 @@ const DarkVeilWrapper = () => {
   return (
     <div className="fixed inset-0 z-5 pointer-events-none select-none" aria-hidden="true">
       <DarkVeil 
-        hueShift={240}
-        noiseIntensity={0.25}
-        scanlineIntensity={0.6}
-        speed={2.5}
-        scanlineFrequency={1.5}
-        warpAmount={0.35}
-        resolutionScale={1}
+        hueShift={0}
+        noiseIntensity={0.1}
+        scanlineIntensity={0.8}
+        speed={3.0}
+        scanlineFrequency={2.0}
+        warpAmount={2.35}
+        resolutionScale={1.25}
       />
     </div>
   );

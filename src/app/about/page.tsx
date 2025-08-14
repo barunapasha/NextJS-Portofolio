@@ -23,8 +23,8 @@ import {
   SiGithub,
   SiFigma,
   SiAdobexd,
-  SiGraphql,
-  SiAmazon,
+  SiVuedotjs,
+  SiSupabase,
   SiVercel
 } from 'react-icons/si';
 import { 
@@ -37,7 +37,7 @@ const AboutPage = () => {
     'JavaScript', 'TypeScript', 'React.js', 'Next.js', 'Node.js', 'Flutter', 'Dart',
     'PHP', 'Laravel', 'MySQL', 'MongoDB', 'Firebase', 'TailwindCSS', 'CSS3', 'HTML5',
     'Git', 'GitHub', 'Figma', 'Adobe XD', 'Responsive Design', 'UI/UX Design',
-    'RESTful APIs', 'GraphQL', 'Docker', 'AWS', 'Vercel', 'Netlify'
+    'RESTful APIs', 'Vue.js', 'Docker', 'Supabase', 'Vercel', 'Netlify'
   ];
 
   // GlassIcons items untuk Skills & Technology
@@ -63,8 +63,8 @@ const AboutPage = () => {
     { icon: <SiAdobexd className="w-8 h-8" />, color: 'pink', label: 'Adobe XD' },
     { icon: <MdDevices className="w-8 h-8" />, color: 'green', label: 'Responsive Design' },
     { icon: <MdApi className="w-8 h-8" />, color: 'blue', label: 'RESTful APIs' },
-    { icon: <SiGraphql className="w-8 h-8" />, color: 'pink', label: 'GraphQL' },
-    { icon: <SiAmazon className="w-8 h-8" />, color: 'orange', label: 'AWS' },
+    { icon: <SiVuedotjs className="w-8 h-8" />, color: 'green', label: 'Vue.js' },
+    { icon: <SiSupabase className="w-8 h-8" />, color: 'green', label: 'Supabase' },
     { icon: <SiVercel className="w-8 h-8" />, color: 'black', label: 'Vercel' },
   ];
 

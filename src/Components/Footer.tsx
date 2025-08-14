@@ -2,8 +2,18 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import DarkVeil from '@/Backgrounds/DarkVeil/DarkVeil';
 
 const Footer = () => {
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const socialLinks = [
     {
       name: 'Instagram',
@@ -50,29 +60,44 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <footer className="relative z-40 bg-white/95 dark:bg-black/0 border-t border-gray-200 dark:border-blue-800">
+      {/* DarkVeil Background for Footer in Dark Mode */}
+      {mounted && resolvedTheme === 'dark' && (
+        <div className="absolute inset-0 z-0 pointer-events-none select-none" aria-hidden="true">
+          <DarkVeil 
+            hueShift={0}
+            noiseIntensity={0.1}
+            scanlineIntensity={0.8}
+            speed={3.0}
+            scanlineFrequency={2.0}
+            warpAmount={2.35}
+            resolutionScale={1.25}
+          />
+        </div>
+      )}
+      
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left mb-12">
           <nav className="flex items-center space-x-6 lg:space-x-8 mb-6 md:mb-0">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="nav-link text-gray-600 dark:text-gray-300 hover:text-brand-purple transition-colors text-lg font-medium"
+                className="nav-link text-gray-700 dark:text-white hover:text-brand-purple transition-colors text-lg font-medium"
               >
                 {item.name}
               </Link>
             ))}
           </nav>
           
-          <div className="flex items-center space-x-4 text-gray-600 dark:text-gray-300">
+                        <div className="flex items-center space-x-4 text-gray-700 dark:text-white">
             {socialLinks.map((social) => (
               <motion.a
                 key={social.name}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-xl hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-300 hover:scale-110"
+                className="p-3 bg-white/30 dark:bg-black/20 backdrop-blur-sm border border-gray-200/50 dark:border-blue-800/30 rounded-xl hover:bg-white/40 dark:hover:bg-black/40 transition-all duration-300 hover:scale-110"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -86,7 +111,7 @@ const Footer = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-12 bg-white/0 dark:bg-black/0"
         >
           <h3 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-8">Interested in working together?</h3>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
@@ -100,14 +125,14 @@ const Footer = () => {
               href="https://github.com/barunapasha"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-8 py-4 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 hover:-translate-y-1"
+              className="inline-flex items-center px-8 py-4 bg-white/90 dark:bg-black/30 backdrop-blur-sm border-2 border-gray-200 dark:border-blue-800/50 text-gray-700 dark:text-white font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-black/50 transition-all duration-300 hover:-translate-y-1"
             >
               Visit My Github
             </a>
           </div>
         </motion.div>
         
-        <div className="text-center text-gray-500 dark:text-gray-400 pt-8 border-t border-gray-200 dark:border-gray-700">
+        <div className="text-center text-gray-500 dark:text-blue-400 pt-8 border-t border-gray-200 dark:border-blue-800">
           <p className="text-lg mb-2">&copy; 2025 All Rights Reserved.</p>
           <p className="text-lg">Made by Baruna Pasha.</p>
         </div>

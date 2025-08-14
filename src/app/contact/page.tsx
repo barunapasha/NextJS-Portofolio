@@ -68,7 +68,7 @@ const ContactPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white dark:from-black/80 dark:via-black/60 dark:to-black/80 pb-24 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white dark:from-black dark:via-black dark:to-black pb-24 overflow-x-hidden">
       {/* Hero Section */}
       <section className="pt-20 pb-16 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
