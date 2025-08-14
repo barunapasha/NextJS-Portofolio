@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
-import SplashCursor from '@/Animations/SplashCursor/SplashCursor'
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +38,6 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      {/* GooeyNav Container */}
       <div className="relative">
         {/* Background Blob */}
         <motion.div
