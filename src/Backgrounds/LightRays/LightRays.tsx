@@ -79,9 +79,8 @@ const LightRays: React.FC<LightRaysProps> = ({
       window.addEventListener('mousemove', handleMouseMove);
       return () => window.removeEventListener('mousemove', handleMouseMove);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [followMouse, mousePosition]);
-
-  const originPos = getOriginPosition();
 
   return (
     <div
@@ -91,7 +90,7 @@ const LightRays: React.FC<LightRaysProps> = ({
       <div 
         className="absolute inset-0"
         style={{
-          background: `radial-gradient(ellipse at ${originPos.x} ${originPos.y}, ${raysColor}60 0%, ${raysColor}40 8%, ${raysColor}20 15%, transparent 40%)`,
+          background: `radial-gradient(ellipse at ${getOriginPosition().x} ${getOriginPosition().y}, ${raysColor}60 0%, ${raysColor}40 8%, ${raysColor}20 15%, transparent 40%)`,
           filter: 'blur(0.5px)',
         }}
       />
@@ -170,7 +169,7 @@ const LightRays: React.FC<LightRaysProps> = ({
       <div 
         className="absolute inset-0"
         style={{
-          background: `radial-gradient(ellipse at ${originPos.x} ${originPos.y}, ${raysColor}50 0%, ${raysColor}30 10%, ${raysColor}15 20%, transparent 45%)`,
+          background: `radial-gradient(ellipse at ${getOriginPosition().x} ${getOriginPosition().y}, ${raysColor}50 0%, ${raysColor}30 10%, ${raysColor}15 20%, transparent 45%)`,
           filter: 'blur(1px)',
           transform: `rotate(${angle}deg)`,
           transformOrigin: 'center top',
@@ -212,7 +211,7 @@ const LightRays: React.FC<LightRaysProps> = ({
       <div 
         className="absolute inset-0 opacity-20"
         style={{
-          background: `radial-gradient(ellipse at ${originPos.x} ${originPos.y}, ${raysColor}30 0%, transparent 40%)`,
+          background: `radial-gradient(ellipse at ${getOriginPosition().x} ${getOriginPosition().y}, ${raysColor}30 0%, transparent 40%)`,
           filter: 'blur(2px)',
           transform: `rotate(${angle}deg)`,
           transformOrigin: 'center top',
