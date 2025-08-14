@@ -82,7 +82,7 @@ const ContactPage = () => {
               Get In Touch
             </h1>
             <p className="text-lg md:text-xl text-gray-600 dark:text-white leading-relaxed">
-              Ready to work together? Let's discuss your project and bring your ideas to life.
+              Ready to work together? Let&apos;s discuss your project and bring your ideas to life.
             </p>
           </motion.div>
         </div>
@@ -98,7 +98,7 @@ const ContactPage = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8">Let's Connect</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8">Let&apos;s Connect</h2>
               <div className="space-y-6 mb-12">
                 {contactInfo.map((info, index) => (
                   <motion.a

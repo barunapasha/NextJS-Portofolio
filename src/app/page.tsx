@@ -100,7 +100,7 @@ const HomePage = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="text-lg md:text-xl text-black dark:text-white mb-4"
               >
-                Hey, I'm Baruna 👋
+                Hey, I&apos;m Baruna 👋
               </motion.p>
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
@@ -125,7 +125,7 @@ const HomePage = () => {
                 transition={{ duration: 0.8, delay: 0.8 }}
                 className="text-lg md:text-xl text-black dark:text-white mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0"
               >
-                I'm a frontend developer based in Jakarta, Indonesia, passionate about creating beautiful and functional web experiences.
+                I&apos;m a frontend developer based in Jakarta, Indonesia, passionate about creating beautiful and functional web experiences.
               </motion.p>
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -323,10 +323,10 @@ const HomePage = () => {
                 My journey into the world of technology is a bit unconventional. For years, my life revolved around the discipline and rigor of competitive swimming, which taught me about dedication, perseverance, and the pursuit of excellence.
               </p>
               <p className="text-lg md:text-xl text-gray-600 dark:text-white leading-relaxed mb-8">
-                Now, as a 6th-semester computer science student, I've found that the thrill of building an application from scratch rivals the excitement of a race. I was captivated by the process of turning an idea into a functional and beautiful piece of software, and I knew I had found my new passion.
+                Now, as a 6th-semester computer science student, I&apos;ve found that the thrill of building an application from scratch rivals the excitement of a race. I was captivated by the process of turning an idea into a functional and beautiful piece of software, and I knew I had found my new passion.
               </p>
               <p className="text-lg md:text-xl text-gray-600 dark:text-white leading-relaxed">
-                While I may have swapped my swim cap for a keyboard, I carry the same focus and determination from my athletic career into every project I undertake. I'm excited to build amazing digital experiences, and I truly love what I do! 💜
+                While I may have swapped my swim cap for a keyboard, I carry the same focus and determination from my athletic career into every project I undertake. I&apos;m excited to build amazing digital experiences, and I truly love what I do! 💜
               </p>
             </div>
           </motion.div>

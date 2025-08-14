@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { useRef, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export type RaysOrigin =
   | "top-center"
@@ -86,7 +86,7 @@ const LightRays: React.FC<LightRaysProps> = ({
       window.addEventListener('mousemove', handleMouseMove);
       return () => window.removeEventListener('mousemove', handleMouseMove);
     }
-  }, [followMouse]);
+  }, [followMouse, calculateAngle]);
 
   const originPos = getOriginPosition();
 

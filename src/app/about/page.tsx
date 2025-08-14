@@ -33,13 +33,6 @@ import {
 } from 'react-icons/md';
 
 const AboutPage = () => {
-  const skills = [
-    'JavaScript', 'TypeScript', 'React.js', 'Next.js', 'Node.js', 'Flutter', 'Dart',
-    'PHP', 'Laravel', 'MySQL', 'MongoDB', 'Firebase', 'TailwindCSS', 'CSS3', 'HTML5',
-    'Git', 'GitHub', 'Figma', 'Adobe XD', 'Responsive Design', 'UI/UX Design',
-    'RESTful APIs', 'Vue.js', 'Docker', 'Supabase', 'Vercel', 'Netlify'
-  ];
-
   // GlassIcons items untuk Skills & Technology
   const skillsIcons = [
     { icon: <SiJavascript className="w-8 h-8" />, color: 'yellow', label: 'JavaScript' },
@@ -129,10 +122,10 @@ const AboutPage = () => {
                   My journey into the world of technology is a bit unconventional. For years, my life revolved around the discipline and rigor of competitive swimming, which taught me about dedication, perseverance, and the pursuit of excellence.
                 </p>
                 <p>
-                  Now, as a 6th-semester computer science student, I've found that the thrill of building an application from scratch rivals the excitement of a race. I was captivated by the process of turning an idea into a functional and beautiful piece of software, and I knew I had found my new passion.
+                  Now, as a 6th-semester computer science student, I&apos;ve found that the thrill of building an application from scratch rivals the excitement of a race. I was captivated by the process of turning an idea into a functional and beautiful piece of software, and I knew I had found my new passion.
                 </p>
                 <p>
-                  While I may have swapped my swim cap for a keyboard, I carry the same focus and determination from my athletic career into every project I undertake. I'm excited to build amazing digital experiences, and I truly love what I do! 💜
+                  While I may have swapped my swim cap for a keyboard, I carry the same focus and determination from my athletic career into every project I undertake. I&apos;m excited to build amazing digital experiences, and I truly love what I do! 💜
                 </p>
               </div>
             </div>
@@ -320,7 +313,7 @@ const AboutPage = () => {
             <div className="bg-gradient-to-br from-brand-purple/5 via-purple-400/5 to-brand-purple/5 dark:from-brand-purple/10 dark:via-purple-400/10 dark:to-brand-purple/10 rounded-2xl p-8 lg:p-12 border border-gray-200 dark:border-blue-800">
               <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6">Ready to work together?</h3>
               <p className="text-lg text-gray-600 dark:text-white mb-8 leading-relaxed">
-                Let's create something amazing together. I'm always excited to take on new challenges.
+                Let&apos;s create something amazing together. I&apos;m always excited to take on new challenges.
               </p>
               <a
                 href="/contact"

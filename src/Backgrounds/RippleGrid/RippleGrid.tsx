@@ -38,7 +38,20 @@ const RippleGrid: React.FC<Props> = ({
   const mousePositionRef = useRef({ x: 0.5, y: 0.5 });
   const targetMouseRef = useRef({ x: 0.5, y: 0.5 });
   const mouseInfluenceRef = useRef(0);
-  const uniformsRef = useRef<any>(null);
+  const uniformsRef = useRef<{
+    enableRainbow: { value: boolean };
+    gridColor: { value: [number, number, number] };
+    rippleIntensity: { value: number };
+    gridSize: { value: number };
+    gridThickness: { value: number };
+    fadeDistance: { value: number };
+    vignetteStrength: { value: number };
+    glowIntensity: { value: number };
+    opacity: { value: number };
+    gridRotation: { value: number };
+    mouseInteraction: { value: boolean };
+    mouseInteractionRadius: { value: number };
+  } | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -250,19 +263,20 @@ void main() {
 
     return () => {
       window.removeEventListener("resize", resize);
-      if (mouseInteraction && containerRef.current) {
-        containerRef.current.removeEventListener("mousemove", handleMouseMove);
-        containerRef.current.removeEventListener(
+      const currentContainer = containerRef.current;
+      if (mouseInteraction && currentContainer) {
+        currentContainer.removeEventListener("mousemove", handleMouseMove);
+        currentContainer.removeEventListener(
           "mouseenter",
           handleMouseEnter
         );
-        containerRef.current.removeEventListener(
+        currentContainer.removeEventListener(
           "mouseleave",
           handleMouseLeave
         );
       }
       renderer.gl.getExtension("WEBGL_lose_context")?.loseContext();
-      containerRef.current?.removeChild(gl.canvas);
+      currentContainer?.removeChild(gl.canvas);
     };
   }, []);
 

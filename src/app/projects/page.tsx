@@ -54,7 +54,6 @@ const ProjectsPage = () => {
   ];
 
   const featuredProjects = projects.filter(p => p.featured);
-  const otherProjects = projects.filter(p => !p.featured);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white dark:from-black/80 dark:via-black/60 dark:to-black/80 pb-24 overflow-x-hidden">
@@ -297,7 +296,7 @@ const ProjectsPage = () => {
               Interested in working together?
             </h3>
             <p className="text-lg text-gray-600 dark:text-white mb-8 leading-relaxed">
-              Let's discuss your project and bring your ideas to life. I'm always excited to work on new challenges.
+              Let&apos;s discuss your project and bring your ideas to life. I&apos;m always excited to work on new challenges.
             </p>
             <a
               href="/contact"

@@ -44,7 +44,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
 );
 Card.displayName = "Card";
 
-type CardRef = RefObject<HTMLDivElement>;
+type CardRef = RefObject<HTMLDivElement | null>;
 interface Slot {
   x: number;
   y: number;
@@ -114,7 +114,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   );
   const refs = useMemo<CardRef[]>(
     () => childArr.map(() => React.createRef<HTMLDivElement>()),
-    [childArr.length]
+    [childArr]
   );
 
   const order = useRef<number[]>(
@@ -219,6 +219,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
       };
     }
     return () => clearInterval(intervalRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing]);
 
   const rendered = childArr.map((child, i) =>
