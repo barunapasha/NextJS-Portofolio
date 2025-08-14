@@ -306,6 +306,7 @@ void main() {
     uniformsRef.current.gridRotation.value = gridRotation;
     uniformsRef.current.mouseInteraction.value = mouseInteraction;
     uniformsRef.current.mouseInteractionRadius.value = mouseInteractionRadius;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     enableRainbow,
     gridColor,

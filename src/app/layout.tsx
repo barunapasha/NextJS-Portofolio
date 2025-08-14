@@ -5,7 +5,6 @@ import { ThemeProvider } from 'next-themes';
 import Footer from '@/Components/Footer';
 import DockNav from '@/Components/DockNav/DockNav';
 import DarkVeilWrapper from '@/Components/DarkVeilWrapper';
-// import SplashCursor from '@/Animations/SplashCursor/SplashCursor';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -40,8 +39,6 @@ export default function RootLayout({
           <div className="relative min-h-screen">
             {/* DarkVeil Background for dark mode */}
             <DarkVeilWrapper />
-            {/* SplashCursor - Temporarily Disabled */}
-            {/* <SplashCursor /> */}
             <main className="relative z-20">
               {children}
             </main>

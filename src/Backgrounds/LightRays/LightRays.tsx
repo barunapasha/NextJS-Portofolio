@@ -27,15 +27,8 @@ interface LightRaysProps {
 }
 
 const LightRays: React.FC<LightRaysProps> = ({
-  raysOrigin = "top-center",
   raysColor = "#00ffff",
-  raysSpeed = 1,
-  lightSpread = 1,
-  rayLength = 2,
   followMouse = true,
-  mouseInfluence = 0.1,
-  noiseAmount = 0.0,
-  distortion = 0.0,
   className = "",
 }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -54,27 +47,27 @@ const LightRays: React.FC<LightRaysProps> = ({
     return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
   };
 
-  // Calculate angle between origin and target
-  const calculateAngle = () => {
-    const originPos = getOriginPosition();
-    const targetPos = getTargetPosition();
-    
-    // Convert percentage to pixels for calculation
-    const originX = window.innerWidth * 0.5;
-    const originY = 0;
-    
-    const deltaX = targetPos.x - originX;
-    const deltaY = targetPos.y - originY;
-    
-    let angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-    
-    // Limit angle to create focused beam
-    angle = Math.max(-30, Math.min(30, angle));
-    
-    return angle;
-  };
-
   useEffect(() => {
+    // Calculate angle between origin and target
+    const calculateAngle = () => {
+      const originPos = getOriginPosition();
+      const targetPos = getTargetPosition();
+      
+      // Convert percentage to pixels for calculation
+      const originX = window.innerWidth * 0.5;
+      const originY = 0;
+      
+      const deltaX = targetPos.x - originX;
+      const deltaY = targetPos.y - originY;
+      
+      let angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+      
+      // Limit angle to create focused beam
+      angle = Math.max(-30, Math.min(30, angle));
+      
+      return angle;
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
       if (followMouse) {
         setMousePosition({ x: e.clientX, y: e.clientY });
@@ -86,7 +79,7 @@ const LightRays: React.FC<LightRaysProps> = ({
       window.addEventListener('mousemove', handleMouseMove);
       return () => window.removeEventListener('mousemove', handleMouseMove);
     }
-  }, [followMouse, calculateAngle]);
+  }, [followMouse, mousePosition]);
 
   const originPos = getOriginPosition();
 
