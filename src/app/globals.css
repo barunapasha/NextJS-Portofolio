@@ -154,6 +154,25 @@
     @apply bg-white/20 border-white/30 scale-105 shadow-lg shadow-brand-purple/20;
   }
 
+  /* Skills Grid Responsive */
+  .skills-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  @media (min-width: 768px) {
+    .skills-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .skills-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+  }
+
   /* Section Spacing */
   .section {
     @apply py-16 md:py-24;

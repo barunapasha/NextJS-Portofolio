@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
-import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
+import DockNav from '@/Components/DockNav/DockNav';
+import DarkVeilWrapper from '@/Components/DarkVeilWrapper';
 // import SplashCursor from '@/Animations/SplashCursor/SplashCursor';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -34,16 +35,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} font-sans bg-white text-brand-dark dark:bg-brand-dark dark:text-gray-200`}>
+      <body className={`${inter.className} font-sans bg-white text-brand-dark dark:bg-black dark:text-gray-200 overflow-x-hidden`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="relative min-h-screen">
+            {/* DarkVeil Background for dark mode */}
+            <DarkVeilWrapper />
             {/* SplashCursor - Temporarily Disabled */}
             {/* <SplashCursor /> */}
-            <Header />
-            <main className="relative z-10">
+            <main className="relative z-20">
               {children}
             </main>
-            <Footer />
+            <div className="relative z-40">
+              <Footer />
+            </div>
+            <DockNav />
           </div>
         </ThemeProvider>
       </body>

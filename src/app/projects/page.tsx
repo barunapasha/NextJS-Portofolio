@@ -57,7 +57,7 @@ const ProjectsPage = () => {
   const otherProjects = projects.filter(p => !p.featured);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white dark:from-brand-dark dark:via-gray-900 dark:to-brand-dark">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white dark:from-black/80 dark:via-black/60 dark:to-black/80 pb-24 overflow-x-hidden">
       {/* Hero Section */}
       <section className="pt-20 pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,7 +70,7 @@ const ProjectsPage = () => {
             <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-brand-purple via-purple-600 to-purple-400 bg-clip-text text-transparent">
               Projects
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-600 dark:text-white leading-relaxed">
               A showcase of my best work and personal projects. Each project represents unique challenges 
               and learning experiences in web and mobile development.
             </p>
@@ -80,7 +80,7 @@ const ProjectsPage = () => {
 
       {/* Featured Projects Section */}
       {featuredProjects.length > 0 && (
-        <section className="py-16 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+        <section className="py-16 bg-white/50 dark:bg-black/50 backdrop-blur-sm">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -91,7 +91,7 @@ const ProjectsPage = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 Featured Projects
               </h2>
-              <p className="text-gray-600 dark:text-gray-300 max-w-2xl">
+              <p className="text-gray-600 dark:text-white max-w-2xl">
                 These are my standout projects that showcase my skills and passion for development.
               </p>
             </motion.div>
@@ -103,7 +103,7 @@ const ProjectsPage = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                  className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-200 dark:border-gray-700"
+                  className="group bg-white dark:bg-black/80 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-200 dark:border-blue-800"
                 >
                   <div className="relative overflow-hidden">
                     <Image
@@ -139,7 +139,7 @@ const ProjectsPage = () => {
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-brand-purple transition-colors duration-300">
                       {project.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                    <p className="text-gray-600 dark:text-white mb-4 leading-relaxed">
                       {project.description}
                     </p>
                     
@@ -159,7 +159,7 @@ const ProjectsPage = () => {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-brand-purple transition-colors duration-300 font-medium"
+                        className="flex items-center space-x-2 text-gray-600 dark:text-blue-400 hover:text-brand-purple transition-colors duration-300 font-medium"
                       >
                         <FiGithub className="w-5 h-5" />
                         <span>View Code</span>
@@ -168,7 +168,7 @@ const ProjectsPage = () => {
                         href={project.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-brand-purple transition-colors duration-300 font-medium"
+                        className="flex items-center space-x-2 text-gray-600 dark:text-blue-400 hover:text-brand-purple transition-colors duration-300 font-medium"
                       >
                         <FiExternalLink className="w-5 h-5" />
                         <span>Live Demo</span>
@@ -194,7 +194,7 @@ const ProjectsPage = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               All Projects
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl">
+            <p className="text-gray-600 dark:text-white max-w-2xl">
               Explore my complete portfolio of projects, from web applications to mobile apps.
             </p>
           </motion.div>
@@ -206,7 +206,7 @@ const ProjectsPage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                className="group bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-200 dark:border-gray-700"
+                className="group bg-white dark:bg-black/80 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-200 dark:border-blue-800"
               >
                 <div className="relative overflow-hidden">
                   <Image
@@ -242,7 +242,7 @@ const ProjectsPage = () => {
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-purple transition-colors duration-300">
                     {project.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 leading-relaxed line-clamp-3">
+                  <p className="text-gray-600 dark:text-white text-sm mb-3 leading-relaxed line-clamp-3">
                     {project.description}
                   </p>
                   
@@ -262,7 +262,7 @@ const ProjectsPage = () => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-brand-purple transition-colors duration-300 font-medium"
+                      className="flex items-center space-x-1 text-gray-600 dark:text-blue-400 hover:text-brand-purple transition-colors duration-300 font-medium"
                     >
                       <FiGithub className="w-4 h-4" />
                       <span>Code</span>
@@ -271,7 +271,7 @@ const ProjectsPage = () => {
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-brand-purple transition-colors duration-300 font-medium"
+                      className="flex items-center space-x-1 text-gray-600 dark:text-blue-400 hover:text-brand-purple transition-colors duration-300 font-medium"
                     >
                       <FiExternalLink className="w-4 h-4" />
                       <span>Demo</span>
@@ -296,7 +296,7 @@ const ProjectsPage = () => {
             <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               Interested in working together?
             </h3>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+            <p className="text-lg text-gray-600 dark:text-white mb-8 leading-relaxed">
               Let's discuss your project and bring your ideas to life. I'm always excited to work on new challenges.
             </p>
             <a

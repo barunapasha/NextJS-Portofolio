@@ -4,9 +4,26 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FiExternalLink, FiCheck } from 'react-icons/fi';
-// import LightRays from '@/Backgrounds/LightRays/LightRays';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import TextType from '@/TextAnimations/TextType/TextType';
 
 const HomePage = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+  const { theme, resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted) {
+      const current = (resolvedTheme ?? theme);
+      setIsDark(current === 'dark');
+    }
+  }, [theme, resolvedTheme, isMounted]);
+
   const projects = [
     {
       title: 'NongkiYuk!',
@@ -65,19 +82,10 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white dark:from-brand-dark dark:via-gray-900 dark:to-brand-dark">
-      {/* LightRays Background - Temporarily Disabled */}
-      {/* <div style={{ width: '100%', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0 }}>
-        <LightRays
-          origin="top-center"
-          intensity={0.3}
-          color="#6E00FF"
-          className="custom-rays"
-        />
-      </div> */}
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white dark:from-black/80 dark:via-black/60 dark:to-black/80 overflow-x-hidden relative">
       
       {/* Hero Section */}
-      <section className="relative z-10 min-h-screen flex items-center pt-20">
+      <section className="relative z-20 min-h-screen flex items-center pt-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div 
@@ -90,7 +98,7 @@ const HomePage = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-4"
+                className="text-lg md:text-xl text-black dark:text-white mb-4"
               >
                 Hey, I'm Baruna 👋
               </motion.p>
@@ -100,17 +108,22 @@ const HomePage = () => {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6"
               >
-                <span className="bg-gradient-to-r from-brand-purple via-purple-600 to-purple-400 bg-clip-text text-transparent">
-                  Frontend
-                </span>
-                <br />
-                <span className="text-gray-900 dark:text-white">Developer</span>
+                <TextType
+                  text={["FrontEnd Developer", "Software Engineer", "Swimmer"]}
+                  typingSpeed={75}
+                  pauseDuration={1500}
+                  showCursor={true}
+                  cursorCharacter="|"
+                  className="font-black"
+                  textColors={isDark ? ["#ffffff", "#ffffff", "#ffffff"] : ["#000000", "#000000", "#000000"]}
+                  cursorClassName={isDark ? "text-white" : "text-black"}
+                />
               </motion.h1>
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
-                className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0"
+                className="text-lg md:text-xl text-black dark:text-white mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0"
               >
                 I'm a frontend developer based in Jakarta, Indonesia, passionate about creating beautiful and functional web experiences.
               </motion.p>
@@ -128,7 +141,7 @@ const HomePage = () => {
                 </Link>
                 <Link 
                   href="/projects"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 hover:-translate-y-1"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white dark:bg-black/80 border-2 border-gray-200 dark:border-blue-800 text-gray-700 dark:text-white font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-black/60 transition-all duration-300 hover:-translate-y-1"
                 >
                   Browse Projects
                 </Link>
@@ -164,7 +177,7 @@ const HomePage = () => {
       </section>
 
       {/* Projects Section */}
-      <section className="py-20 relative z-10 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+      <section className="py-20 relative z-20 bg-white/30 dark:bg-black/30 backdrop-blur-md">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -182,7 +195,7 @@ const HomePage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-200 dark:border-gray-700"
+                className="bg-white/80 dark:bg-black/60 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-200/50 dark:border-blue-800/50 backdrop-blur-sm"
               >
                 <div className="relative overflow-hidden">
                   <Image
@@ -198,7 +211,7 @@ const HomePage = () => {
                     {project.title}
                     <FiExternalLink className="h-5 w-5 ml-2 text-gray-400 hover:text-brand-purple transition-colors" />
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">{project.description}</p>
+                  <p className="text-gray-600 dark:text-white mb-4 leading-relaxed">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
                       <span key={tag} className="px-3 py-1 bg-gradient-to-r from-brand-purple/10 to-purple-400/10 text-brand-purple dark:text-purple-300 rounded-full text-sm font-medium border border-brand-purple/20">
@@ -214,7 +227,7 @@ const HomePage = () => {
       </section>
 
       {/* Experience Section */}
-      <section className="py-20 relative z-10" id="experience">
+      <section className="py-20 relative z-20" id="experience">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -232,7 +245,7 @@ const HomePage = () => {
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200 dark:border-gray-700"
+                className="bg-white/80 dark:bg-black/60 rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200/50 dark:border-blue-800/50 backdrop-blur-sm"
               >
                 <div className="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-8">
                   <div className="flex-shrink-0">
@@ -245,7 +258,7 @@ const HomePage = () => {
                     <p className="text-brand-purple font-medium mb-4">{exp.location}</p>
                     <ul className="space-y-3">
                       {exp.points.map((point, pointIndex) => (
-                        <li key={pointIndex} className="flex items-start text-gray-600 dark:text-gray-300">
+                        <li key={pointIndex} className="flex items-start text-gray-600 dark:text-white">
                           <FiCheck className="w-5 h-5 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
                           <span className="leading-relaxed">{point}</span>
                         </li>
@@ -260,7 +273,7 @@ const HomePage = () => {
       </section>
 
       {/* Skills Section */}
-      <section className="py-20 relative z-10 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+      <section className="py-20 relative z-20 bg-white/30 dark:bg-black/30 backdrop-blur-md">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -278,12 +291,12 @@ const HomePage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
+                className="bg-white/80 dark:bg-black/60 rounded-2xl p-6 shadow-lg border border-gray-200/50 dark:border-blue-800/50 backdrop-blur-sm hover:shadow-xl transition-all duration-300"
               >
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{skillGroup.category}</h3>
                 <ul className="space-y-3">
                   {skillGroup.items.map((skill) => (
-                    <li key={skill} className="text-gray-600 dark:text-gray-300 flex items-center">
+                    <li key={skill} className="text-gray-600 dark:text-white flex items-center">
                       <FiCheck className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
                       <span className="leading-relaxed">{skill}</span>
                     </li>
@@ -296,7 +309,7 @@ const HomePage = () => {
       </section>
 
       {/* My Story Section */}
-      <section className="py-20 relative z-10">
+      <section className="py-20 relative z-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -305,14 +318,14 @@ const HomePage = () => {
             className="text-center max-w-4xl mx-auto"
           >
             <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-12">My Story</h2>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 lg:p-12 shadow-lg border border-gray-200 dark:border-gray-700">
-              <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
+                          <div className="bg-white/80 dark:bg-black/60 rounded-2xl p-8 lg:p-12 shadow-lg border border-gray-200/50 dark:border-blue-800/50 backdrop-blur-sm">
+              <p className="text-lg md:text-xl text-gray-600 dark:text-white leading-relaxed mb-8">
                 My journey into the world of technology is a bit unconventional. For years, my life revolved around the discipline and rigor of competitive swimming, which taught me about dedication, perseverance, and the pursuit of excellence.
               </p>
-              <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
+              <p className="text-lg md:text-xl text-gray-600 dark:text-white leading-relaxed mb-8">
                 Now, as a 6th-semester computer science student, I've found that the thrill of building an application from scratch rivals the excitement of a race. I was captivated by the process of turning an idea into a functional and beautiful piece of software, and I knew I had found my new passion.
               </p>
-              <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-600 dark:text-white leading-relaxed">
                 While I may have swapped my swim cap for a keyboard, I carry the same focus and determination from my athletic career into every project I undertake. I'm excited to build amazing digital experiences, and I truly love what I do! 💜
               </p>
             </div>

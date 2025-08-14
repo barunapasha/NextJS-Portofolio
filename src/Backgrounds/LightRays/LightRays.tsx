@@ -1,131 +1,231 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
 
-export type RaysOrigin = 'top-center' | 'center' | 'bottom-center';
+export type RaysOrigin =
+  | "top-center"
+  | "top-left"
+  | "top-right"
+  | "right"
+  | "left"
+  | "bottom-center"
+  | "bottom-right"
+  | "bottom-left";
 
 interface LightRaysProps {
-  origin?: RaysOrigin;
-  intensity?: number;
-  color?: string;
+  raysOrigin?: RaysOrigin;
+  raysColor?: string;
+  raysSpeed?: number;
+  lightSpread?: number;
+  rayLength?: number;
+  followMouse?: boolean;
+  mouseInfluence?: number;
+  noiseAmount?: number;
+  distortion?: number;
   className?: string;
 }
 
-const LightRays = ({
-  origin = 'top-center',
-  intensity = 0.3,
-  color = '#6E00FF',
-  className = '',
-}: LightRaysProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [particles, setParticles] = useState<Array<{ id: number; left: number; top: number }>>([]);
+const LightRays: React.FC<LightRaysProps> = ({
+  raysOrigin = "top-center",
+  raysColor = "#00ffff",
+  raysSpeed = 1,
+  lightSpread = 1,
+  rayLength = 2,
+  followMouse = true,
+  mouseInfluence = 0.1,
+  noiseAmount = 0.0,
+  distortion = 0.0,
+  className = "",
+}) => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [angle, setAngle] = useState(0);
+
+  // Get static origin position (always top-center)
+  const getOriginPosition = () => {
+    return { x: '50%', y: '0%' };
+  };
+
+  // Get target position (mouse or screen center)
+  const getTargetPosition = () => {
+    if (followMouse) {
+      return { x: mousePosition.x, y: mousePosition.y };
+    }
+    return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  };
+
+  // Calculate angle between origin and target
+  const calculateAngle = () => {
+    const originPos = getOriginPosition();
+    const targetPos = getTargetPosition();
+    
+    // Convert percentage to pixels for calculation
+    const originX = window.innerWidth * 0.5;
+    const originY = 0;
+    
+    const deltaX = targetPos.x - originX;
+    const deltaY = targetPos.y - originY;
+    
+    let angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+    
+    // Limit angle to create focused beam
+    angle = Math.max(-30, Math.min(30, angle));
+    
+    return angle;
+  };
 
   useEffect(() => {
-    setIsVisible(true);
-    
-    // Generate particles on client side to avoid hydration mismatch
-    const generatedParticles = Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      left: Math.random() * 100,
-      top: Math.random() * 100,
-    }));
-    setParticles(generatedParticles);
-  }, []);
+    const handleMouseMove = (e: MouseEvent) => {
+      if (followMouse) {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+        setAngle(calculateAngle());
+      }
+    };
 
-  const getOriginPosition = () => {
-    switch (origin) {
-      case 'top-center':
-        return { x: '50%', y: '0%' };
-      case 'center':
-        return { x: '50%', y: '50%' };
-      case 'bottom-center':
-        return { x: '50%', y: '100%' };
-      default:
-        return { x: '50%', y: '0%' };
+    if (followMouse) {
+      window.addEventListener('mousemove', handleMouseMove);
+      return () => window.removeEventListener('mousemove', handleMouseMove);
     }
-  };
+  }, [followMouse]);
 
   const originPos = getOriginPosition();
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isVisible ? intensity : 0 }}
-      transition={{ duration: 1.5, ease: 'easeOut' }}
+    <div
       className={`fixed inset-0 pointer-events-none z-0 ${className}`}
-      style={{
-        background: `radial-gradient(ellipse at ${originPos.x} ${originPos.y}, ${color}20 0%, transparent 70%)`,
-      }}
     >
-      {/* Animated light rays using CSS */}
+      {/* Main spotlight effect - always from top-center */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(ellipse at ${originPos.x} ${originPos.y}, ${raysColor}60 0%, ${raysColor}40 8%, ${raysColor}20 15%, transparent 40%)`,
+          filter: 'blur(0.5px)',
+        }}
+      />
+
+      {/* Spiky light rays that create the "duri-duri" effect */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(8)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 bg-gradient-to-b from-transparent via-purple-400/30 to-transparent"
+            className="absolute"
             style={{
-              left: `${12.5 + i * 12.5}%`,
+              left: '50%',
+              top: '0%',
               height: '100vh',
-              transformOrigin: `${originPos.x} ${originPos.y}`,
+              width: '1px',
+              background: `linear-gradient(to bottom, ${raysColor}90 0%, ${raysColor}70 5%, ${raysColor}50 10%, ${raysColor}30 20%, transparent 50%)`,
+              transformOrigin: 'center top',
+              filter: 'blur(0.2px)',
             }}
             initial={{ 
               opacity: 0,
               scaleY: 0,
-              rotate: `${i * 45}deg`
+              rotate: `${angle + (i * 24)}deg`
             }}
             animate={{ 
-              opacity: [0, 0.3, 0],
+              opacity: [0, 0.8, 0],
               scaleY: [0, 1, 0],
-              rotate: `${i * 45}deg`
+              rotate: `${angle + (i * 24)}deg`
             }}
             transition={{
-              duration: 3,
-              delay: i * 0.2,
+              duration: 2.5,
+              delay: i * 0.1,
               repeat: Infinity,
-              repeatDelay: 2,
+              repeatDelay: 0.3,
+              ease: 'easeInOut'
+            }}
+          />
+        ))}
+        
+        {/* Irregular rays for more realistic "duri-duri" effect */}
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={`irregular-${i}`}
+            className="absolute"
+            style={{
+              left: '50%',
+              top: '0%',
+              height: `${60 + Math.random() * 40}%`,
+              width: '0.5px',
+              background: `linear-gradient(to bottom, ${raysColor}80 0%, ${raysColor}60 8%, ${raysColor}40 15%, transparent 30%)`,
+              transformOrigin: 'center top',
+              filter: 'blur(0.1px)',
+            }}
+            initial={{ 
+              opacity: 0,
+              scaleY: 0,
+              rotate: `${angle + (i * 45) + (Math.random() * 20 - 10)}deg`
+            }}
+            animate={{ 
+              opacity: [0, 0.6, 0],
+              scaleY: [0, 1, 0],
+              rotate: `${angle + (i * 45) + (Math.random() * 20 - 10)}deg`
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              delay: i * 0.15 + Math.random() * 0.5,
+              repeat: Infinity,
+              repeatDelay: 0.5 + Math.random(),
               ease: 'easeInOut'
             }}
           />
         ))}
       </div>
 
-      {/* Floating particles - only render after client-side hydration */}
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          className="absolute w-1 h-1 bg-purple-400/40 rounded-full"
-          style={{
-            left: `${particle.left}%`,
-            top: `${particle.top}%`,
-          }}
-          initial={{ 
-            opacity: 0,
-            scale: 0,
-            y: 0
-          }}
-          animate={{ 
-            opacity: [0, 0.6, 0],
-            scale: [0, 1, 0],
-            y: [-20, 20, -20]
-          }}
-          transition={{
-            duration: 4 + (particle.id % 3),
-            delay: particle.id * 0.1,
-            repeat: Infinity,
-            ease: 'easeInOut'
-          }}
-        />
-      ))}
-
-      {/* Gradient overlay for better integration */}
+      {/* Additional glow effect - follows cursor direction */}
       <div 
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%)`
+          background: `radial-gradient(ellipse at ${originPos.x} ${originPos.y}, ${raysColor}50 0%, ${raysColor}30 10%, ${raysColor}15 20%, transparent 45%)`,
+          filter: 'blur(1px)',
+          transform: `rotate(${angle}deg)`,
+          transformOrigin: 'center top',
         }}
       />
-    </motion.div>
+
+      {/* Light particles for atmosphere */}
+      <div className="absolute inset-0">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              background: raysColor,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 2 + 0.5}px`,
+              height: `${Math.random() * 2 + 0.5}px`,
+            }}
+            initial={{ 
+              opacity: 0,
+              scale: 0,
+            }}
+            animate={{ 
+              opacity: [0, 0.6, 0],
+              scale: [0, 1, 0],
+            }}
+            transition={{
+              duration: 4 + Math.random() * 2,
+              delay: Math.random() * 2,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Subtle caustics effect - follows cursor direction */}
+      <div 
+        className="absolute inset-0 opacity-20"
+        style={{
+          background: `radial-gradient(ellipse at ${originPos.x} ${originPos.y}, ${raysColor}30 0%, transparent 40%)`,
+          filter: 'blur(2px)',
+          transform: `rotate(${angle}deg)`,
+          transformOrigin: 'center top',
+        }}
+      />
+    </div>
   );
 };
 

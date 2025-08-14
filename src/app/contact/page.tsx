@@ -25,8 +25,16 @@ const ContactPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Create mailto link with form data
+    const subject = encodeURIComponent(formData.subject);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
+    const mailtoLink = `mailto:baruna.pasha98@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Open default email client
+    window.open(mailtoLink, '_blank');
+    
+    // Simulate form submission delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     setIsSubmitting(false);
     setIsSubmitted(true);
@@ -42,8 +50,8 @@ const ContactPage = () => {
     {
       icon: FiMail,
       title: 'Email',
-      value: 'barunapasha@gmail.com',
-      href: 'mailto:barunapasha@gmail.com',
+      value: 'baruna.pasha98@gmail.com',
+      href: 'mailto:baruna.pasha98@gmail.com',
     },
     {
       icon: FiPhone,
@@ -60,7 +68,7 @@ const ContactPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white dark:from-brand-dark dark:via-gray-900 dark:to-brand-dark">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white dark:from-black/80 dark:via-black/60 dark:to-black/80 pb-24 overflow-x-hidden">
       {/* Hero Section */}
       <section className="pt-20 pb-16 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,7 +81,7 @@ const ContactPage = () => {
             <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-brand-purple via-purple-600 to-purple-400 bg-clip-text text-transparent">
               Get In Touch
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-600 dark:text-white leading-relaxed">
               Ready to work together? Let's discuss your project and bring your ideas to life.
             </p>
           </motion.div>
@@ -99,14 +107,14 @@ const ContactPage = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                    className="flex items-center space-x-4 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group"
+                    className="flex items-center space-x-4 p-6 bg-white dark:bg-black/80 rounded-2xl shadow-lg border border-gray-200 dark:border-blue-800 hover:shadow-xl transition-all duration-300 group"
                   >
                     <div className="p-4 bg-brand-purple/10 rounded-full group-hover:bg-brand-purple/20 transition-colors">
                       <info.icon className="w-6 h-6 text-brand-purple" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white text-lg">{info.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-300">{info.value}</p>
+                      <p className="text-gray-600 dark:text-white">{info.value}</p>
                     </div>
                   </motion.a>
                 ))}
@@ -116,10 +124,10 @@ const ContactPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="p-8 bg-gradient-to-br from-brand-purple/5 via-purple-400/5 to-brand-purple/5 dark:from-brand-purple/10 dark:via-purple-400/10 dark:to-brand-purple/10 rounded-2xl border border-gray-200 dark:border-gray-700"
+                className="p-8 bg-gradient-to-br from-brand-purple/5 via-purple-400/5 to-brand-purple/5 dark:from-brand-purple/10 dark:via-purple-400/10 dark:to-brand-purple/10 rounded-2xl border border-gray-200 dark:border-blue-800"
               >
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Why Work With Me?</h3>
-                <ul className="space-y-4 text-gray-600 dark:text-gray-300">
+                <ul className="space-y-4 text-gray-600 dark:text-white">
                   <li className="flex items-start">
                     <FiCheck className="w-5 h-5 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
                     <span className="leading-relaxed">Fast response time and clear communication</span>
@@ -147,10 +155,10 @@ const ContactPage = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8">Send Message</h2>
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+              <div className="bg-white dark:bg-black/80 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-blue-800">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-white mb-3">
                       Name *
                     </label>
                     <input
@@ -160,13 +168,13 @@ const ContactPage = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-purple/30 focus:border-brand-purple dark:bg-gray-700 dark:text-white transition-colors text-lg"
+                      className="w-full px-4 py-4 border border-gray-300 dark:border-blue-800 rounded-xl focus:ring-2 focus:ring-brand-purple/30 focus:border-brand-purple dark:bg-black/80 dark:text-white transition-colors text-lg"
                       placeholder="Your name"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-white mb-3">
                       Email *
                     </label>
                     <input
@@ -176,13 +184,13 @@ const ContactPage = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-purple/30 focus:border-brand-purple dark:bg-gray-700 dark:text-white transition-colors text-lg"
+                      className="w-full px-4 py-4 border border-gray-300 dark:border-blue-800 rounded-xl focus:ring-2 focus:ring-brand-purple/30 focus:border-brand-purple dark:bg-black/80 dark:text-white transition-colors text-lg"
                       placeholder="your.email@example.com"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-white mb-3">
                       Subject *
                     </label>
                     <input
@@ -192,13 +200,13 @@ const ContactPage = () => {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-purple/30 focus:border-brand-purple dark:bg-gray-700 dark:text-white transition-colors text-lg"
+                      className="w-full px-4 py-4 border border-gray-300 dark:border-blue-800 rounded-xl focus:ring-2 focus:ring-brand-purple/30 focus:border-brand-purple dark:bg-black/80 dark:text-white transition-colors text-lg"
                       placeholder="Project inquiry"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-white mb-3">
                       Message *
                     </label>
                     <textarea
@@ -208,7 +216,7 @@ const ContactPage = () => {
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-purple/30 focus:border-brand-purple dark:bg-gray-700 dark:text-white transition-colors resize-none text-lg"
+                      className="w-full px-4 py-4 border border-gray-300 dark:border-blue-800 rounded-xl focus:ring-2 focus:ring-brand-purple/30 focus:border-brand-purple dark:bg-black/80 dark:text-white transition-colors resize-none text-lg"
                       placeholder="Tell me about your project..."
                     />
                   </div>
@@ -230,12 +238,12 @@ const ContactPage = () => {
                     ) : isSubmitted ? (
                       <>
                         <FiCheck className="w-5 h-5" />
-                        <span>Message Sent!</span>
+                        <span>Email Client Opened!</span>
                       </>
                     ) : (
                       <>
                         <FiSend className="w-5 h-5" />
-                        <span>Send Message</span>
+                        <span>Open Email Client</span>
                       </>
                     )}
                   </motion.button>
