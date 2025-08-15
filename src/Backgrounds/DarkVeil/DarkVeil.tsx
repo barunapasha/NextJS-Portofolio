@@ -104,15 +104,29 @@ export default function DarkVeil({
     const canvas = ref.current as HTMLCanvasElement;
     const parent = canvas.parentElement as HTMLElement;
 
+    // Check if WebGL is supported
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) {
+      console.warn('WebGL not supported, falling back to CSS background');
+      return;
+    }
+
+    // Check for mobile device
+    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()) || window.innerWidth <= 768;
+    
+    // Reduce DPR for mobile devices to improve performance
+    const maxDPR = isMobile ? 1 : 2;
+    const dpr = Math.min(window.devicePixelRatio, maxDPR);
+
     const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
+      dpr,
       canvas,
     });
 
-    const gl = renderer.gl;
-    const geometry = new Triangle(gl);
+    const glContext = renderer.gl;
+    const geometry = new Triangle(glContext);
 
-    const program = new Program(gl, {
+    const program = new Program(glContext, {
       vertex,
       fragment,
       uniforms: {
@@ -126,12 +140,15 @@ export default function DarkVeil({
       },
     });
 
-    const mesh = new Mesh(gl, { geometry, program });
+    const mesh = new Mesh(glContext, { geometry, program });
 
     const resize = () => {
       const w = parent.clientWidth,
         h = parent.clientHeight;
-      renderer.setSize(w * resolutionScale, h * resolutionScale);
+      
+      // Reduce resolution for mobile devices
+      const finalResolutionScale = isMobile ? resolutionScale * 0.8 : resolutionScale;
+      renderer.setSize(w * finalResolutionScale, h * finalResolutionScale);
       program.uniforms.uResolution.value.set(w, h);
     };
 
@@ -140,8 +157,17 @@ export default function DarkVeil({
 
     const start = performance.now();
     let frame = 0;
+    let lastTime = 0;
 
-    const loop = () => {
+    const loop = (currentTime: number) => {
+      // Limit frame rate on mobile for better performance
+      if (isMobile && currentTime - lastTime < 16) { // ~60fps max
+        frame = requestAnimationFrame(loop);
+        return;
+      }
+      
+      lastTime = currentTime;
+      
       program.uniforms.uTime.value =
         ((performance.now() - start) / 1000) * speed;
       program.uniforms.uHueShift.value = hueShift;
@@ -153,7 +179,7 @@ export default function DarkVeil({
       frame = requestAnimationFrame(loop);
     };
 
-    loop();
+    loop(0);
 
     return () => {
       cancelAnimationFrame(frame);
@@ -172,7 +198,7 @@ export default function DarkVeil({
   return (
     <canvas
       ref={ref}
-      className="w-full h-full block"
+      className="w-full h-full block webgl-canvas"
     />
   );
 }

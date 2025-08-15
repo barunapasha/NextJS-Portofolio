@@ -7,11 +7,13 @@ import { FiExternalLink, FiCheck } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import TextType from '@/TextAnimations/TextType/TextType';
+import useMobileDetection from '@/hooks/useMobileDetection';
 
 const HomePage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const { theme, resolvedTheme } = useTheme();
+  const { isMobile, isLowPerformance } = useMobileDetection();
 
   useEffect(() => {
     setIsMounted(true);
@@ -81,6 +83,19 @@ const HomePage = () => {
     },
   ];
 
+  // Mobile-optimized animation settings
+  const mobileAnimationSettings = {
+    duration: 0.6,
+    delay: 0.1,
+  };
+
+  const desktopAnimationSettings = {
+    duration: 0.8,
+    delay: 0.2,
+  };
+
+  const animationSettings = isMobile ? mobileAnimationSettings : desktopAnimationSettings;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white dark:from-black/80 dark:via-black/60 dark:to-black/80 overflow-x-hidden relative">
       
@@ -91,13 +106,13 @@ const HomePage = () => {
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: animationSettings.duration, delay: animationSettings.delay }}
               className="text-center lg:text-left"
             >
               <motion.p 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                transition={{ duration: animationSettings.duration, delay: animationSettings.delay + 0.2 }}
                 className="text-lg md:text-xl text-black dark:text-white mb-4"
               >
                 Hey, I&apos;m Baruna 👋
@@ -105,13 +120,13 @@ const HomePage = () => {
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
+                transition={{ duration: animationSettings.duration, delay: animationSettings.delay + 0.4 }}
                 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6"
               >
                 <TextType
                   text={["FrontEnd Developer", "Software Engineer", "Swimmer"]}
-                  typingSpeed={75}
-                  pauseDuration={1500}
+                  typingSpeed={isMobile ? 100 : 75}
+                  pauseDuration={isMobile ? 1000 : 1500}
                   showCursor={true}
                   cursorCharacter="|"
                   className="font-black"
@@ -122,7 +137,7 @@ const HomePage = () => {
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.8 }}
+                transition={{ duration: animationSettings.duration, delay: animationSettings.delay + 0.6 }}
                 className="text-lg md:text-xl text-black dark:text-white mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0"
               >
                 I&apos;m a frontend developer based in Jakarta, Indonesia, passionate about creating beautiful and functional web experiences.
@@ -130,7 +145,7 @@ const HomePage = () => {
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1 }}
+                transition={{ duration: animationSettings.duration, delay: animationSettings.delay + 0.8 }}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
                 <Link 
@@ -151,14 +166,14 @@ const HomePage = () => {
             <motion.div 
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: animationSettings.duration, delay: animationSettings.delay }}
               className="flex justify-center lg:justify-end"
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-purple-200 dark:bg-purple-900 rounded-full transform -translate-x-4 -translate-y-4 animate-pulse-slow" style={{ filter: 'blur(80px)', zIndex: -1 }}></div>
                 <motion.div
-                  animate={{ y: [-10, 10, -10] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  animate={{ y: isMobile ? [-5, 5, -5] : [-10, 10, -10] }}
+                  transition={{ duration: isMobile ? 4 : 6, repeat: Infinity, ease: "easeInOut" }}
                   className="relative z-10"
                 >
                   <Image
@@ -182,7 +197,7 @@ const HomePage = () => {
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: animationSettings.duration }}
             className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-12 text-center"
           >
             Newest Projects
@@ -194,7 +209,7 @@ const HomePage = () => {
                 key={project.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                transition={{ duration: animationSettings.duration, delay: index * (isMobile ? 0.1 : 0.2) }}
                 className="bg-white/80 dark:bg-black/60 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-200/50 dark:border-blue-800/50 backdrop-blur-sm"
               >
                 <div className="relative overflow-hidden">
@@ -232,7 +247,7 @@ const HomePage = () => {
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: animationSettings.duration }}
             className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-12 text-center"
           >
             Experience
@@ -244,7 +259,7 @@ const HomePage = () => {
                 key={index}
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: animationSettings.duration, delay: index * (isMobile ? 0.05 : 0.1) }}
                 className="bg-white/80 dark:bg-black/60 rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200/50 dark:border-blue-800/50 backdrop-blur-sm"
               >
                 <div className="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-8">
@@ -278,7 +293,7 @@ const HomePage = () => {
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: animationSettings.duration }}
             className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-12 text-center"
           >
             Skills
@@ -290,7 +305,7 @@ const HomePage = () => {
                 key={skillGroup.category}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: animationSettings.duration, delay: index * (isMobile ? 0.05 : 0.1) }}
                 className="bg-white/80 dark:bg-black/60 rounded-2xl p-6 shadow-lg border border-gray-200/50 dark:border-blue-800/50 backdrop-blur-sm hover:shadow-xl transition-all duration-300"
               >
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{skillGroup.category}</h3>
@@ -314,7 +329,7 @@ const HomePage = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: animationSettings.duration }}
             className="text-center max-w-4xl mx-auto"
           >
             <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-12">My Story</h2>

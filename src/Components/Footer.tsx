@@ -5,10 +5,12 @@ import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import DarkVeil from '@/Backgrounds/DarkVeil/DarkVeil';
+import useMobileDetection from '@/hooks/useMobileDetection';
 
 const Footer = () => {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
+  const { isMobile, isLowPerformance } = useMobileDetection();
 
   useEffect(() => {
     setMounted(true);
@@ -59,20 +61,51 @@ const Footer = () => {
     { name: 'About', href: '/about' },
   ];
 
+  // Mobile-optimized settings
+  const mobileSettings = {
+    hueShift: 0,
+    noiseIntensity: 0.05,
+    scanlineIntensity: 0.4,
+    speed: 1.5,
+    scanlineFrequency: 1.0,
+    warpAmount: 1.0,
+    resolutionScale: 0.8,
+  };
+
+  // Desktop settings
+  const desktopSettings = {
+    hueShift: 0,
+    noiseIntensity: 0.1,
+    scanlineIntensity: 0.8,
+    speed: 3.0,
+    scanlineFrequency: 2.0,
+    warpAmount: 2.35,
+    resolutionScale: 1.25,
+  };
+
+  const settings = isMobile ? mobileSettings : desktopSettings;
+
   return (
     <footer className="relative z-40 bg-white/95 dark:bg-black/0 border-t border-gray-200 dark:border-blue-800">
       {/* DarkVeil Background for Footer in Dark Mode */}
-      {mounted && resolvedTheme === 'dark' && (
+      {mounted && resolvedTheme === 'dark' && !isLowPerformance && (
         <div className="absolute inset-0 z-0 pointer-events-none select-none" aria-hidden="true">
           <DarkVeil 
-            hueShift={0}
-            noiseIntensity={0.1}
-            scanlineIntensity={0.8}
-            speed={3.0}
-            scanlineFrequency={2.0}
-            warpAmount={2.35}
-            resolutionScale={1.25}
+            hueShift={settings.hueShift}
+            noiseIntensity={settings.noiseIntensity}
+            scanlineIntensity={settings.scanlineIntensity}
+            speed={settings.speed}
+            scanlineFrequency={settings.scanlineFrequency}
+            warpAmount={settings.warpAmount}
+            resolutionScale={settings.resolutionScale}
           />
+        </div>
+      )}
+      
+      {/* Fallback background for low-performance devices */}
+      {mounted && resolvedTheme === 'dark' && isLowPerformance && (
+        <div className="absolute inset-0 z-0 pointer-events-none select-none dark-mobile-fallback" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-60"></div>
         </div>
       )}
       

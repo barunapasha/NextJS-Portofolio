@@ -47,6 +47,55 @@
   .dark ::-webkit-scrollbar-track {
     background: #1a1a1a;
   }
+
+  /* Mobile-optimized dark mode background */
+  .dark {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  }
+
+  /* Mobile-specific dark mode optimizations */
+  @media (max-width: 768px) {
+    .dark {
+      background: linear-gradient(135deg, #000000 0%, #111111 50%, #000000 100%);
+    }
+    
+    /* Reduce motion for better performance on mobile */
+    .dark * {
+      animation-duration: 0.8s !important;
+      transition-duration: 0.3s !important;
+    }
+    
+    /* Optimize backdrop blur for mobile */
+    .dark .backdrop-blur-md {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    
+    .dark .backdrop-blur-sm {
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+  }
+
+  /* High-performance mobile dark mode fallback */
+  .dark-mobile-fallback {
+    background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000000 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Reduce WebGL complexity on mobile */
+  @media (max-width: 768px) {
+    .webgl-canvas {
+      transform: scale(0.8);
+      transform-origin: center;
+    }
+  }
 }
 
 @layer components {
@@ -219,6 +268,27 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  /* Mobile-optimized dark mode components */
+  .mobile-dark-card {
+    @apply bg-black/60 backdrop-blur-sm border border-blue-800/50;
+  }
+
+  .mobile-dark-overlay {
+    @apply bg-black/40 backdrop-blur-sm;
+  }
+
+  /* Performance optimizations for mobile */
+  @media (max-width: 768px) {
+    .mobile-optimized {
+      will-change: auto;
+      transform: translateZ(0);
+    }
+    
+    .mobile-optimized * {
+      will-change: auto;
+    }
   }
 }
 
