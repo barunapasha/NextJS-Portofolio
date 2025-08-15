@@ -61,10 +61,12 @@ export const useMobileDetection = (): MobileDetectionResult => {
       const isLowEndDevice = /galaxy a|galaxy j|redmi|huawei y|honor play/i.test(userAgent);
       
       // Check for limited memory (if available)
-      const hasLimitedMemory = (navigator as any).deviceMemory && (navigator as any).deviceMemory < 4;
+      const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+      const hasLimitedMemory = deviceMemory !== undefined && deviceMemory < 4;
       
       // Check for slow CPU (if available)
-      const hasSlowCPU = (navigator as any).hardwareConcurrency && (navigator as any).hardwareConcurrency < 4;
+      const hardwareConcurrency = navigator.hardwareConcurrency;
+      const hasSlowCPU = hardwareConcurrency !== undefined && hardwareConcurrency < 4;
       
       return isOldAndroid || isLowEndDevice || hasLimitedMemory || hasSlowCPU;
     };

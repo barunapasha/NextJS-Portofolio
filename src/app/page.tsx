@@ -13,7 +13,7 @@ const HomePage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const { theme, resolvedTheme } = useTheme();
-  const { isMobile, isLowPerformance } = useMobileDetection();
+  const { isMobile } = useMobileDetection();
 
   useEffect(() => {
     setIsMounted(true);
